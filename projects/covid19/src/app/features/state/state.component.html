@@ -1,0 +1,89 @@
+<ng-container *ngIf="stateInfo | async as stateInfo">
+    <mat-toolbar color="primary">
+        <span>{{ stateName }} ({{ stateAbbr }}) Summary</span>
+    </mat-toolbar>
+
+    <b>Twitter:</b> <a href="{{ stateInfo.twitterLink }}" target="_blank" rel="noopener">
+        {{ stateInfo.twitter }}
+    </a> <i class="far fa-external-link fa-sm"></i><br />
+    <b>State Site:</b> <a href="{{ stateInfo.covid19Site }}" target="_blank" rel="noopener">
+        COVID-19
+    </a> <i class="far fa-external-link fa-sm"></i>
+
+    <div class="table-container mat-elevation-z8">
+        <table mat-table *ngIf="datesData | async as datesData" [dataSource]="datesData">
+    
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let date">{{ getDate(date.date) }}</td>
+                <td mat-footer-cell *matFooterCellDef>Total</td>
+            </ng-container>
+
+            <!-- Tests: Total -->
+            <ng-container matColumnDef="testsTotal">
+                <th mat-header-cell *matHeaderCellDef>Tests</th>
+                <td mat-cell *matCellDef="let state">{{ state.totalTestResults | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Increase -->
+            <ng-container matColumnDef="testsIncrease">
+                <th mat-header-cell *matHeaderCellDef>Increase</th>
+                <td mat-cell *matCellDef="let state">{{ state.totalTestResultsIncrease | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Positive -->
+            <ng-container matColumnDef="positive">
+                <th mat-header-cell *matHeaderCellDef>Positive</th>
+                <td mat-cell *matCellDef="let state">{{ state.positive | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Positive Increase -->
+            <ng-container matColumnDef="positiveIncrease">
+                <th mat-header-cell *matHeaderCellDef>Increase</th>
+                <td mat-cell *matCellDef="let state">{{ state.positiveIncrease | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Hospitalized -->
+            <ng-container matColumnDef="hospitalizedCumulative">
+                <th mat-header-cell *matHeaderCellDef>Hospitazlied</th>
+                <td mat-cell *matCellDef="let state">{{ state.hospitalizedCumulative | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Hospitalized Increase -->
+            <ng-container matColumnDef="hospitalizedIncrease">
+                <th mat-header-cell *matHeaderCellDef>Increase</th>
+                <td mat-cell *matCellDef="let state">{{ state.hospitalizedIncrease | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Death -->
+            <ng-container matColumnDef="death">
+                <th mat-header-cell *matHeaderCellDef>Deaths</th>
+                <td mat-cell *matCellDef="let state">{{ state.death | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!-- Tests: Death Increase -->
+            <ng-container matColumnDef="deathIncrease">
+                <th mat-header-cell *matHeaderCellDef>Increase</th>
+                <td mat-cell *matCellDef="let state">{{ state.deathIncrease | number }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+
+            <!-- DEFINE ROWS -->
+            <!-- <tr mat-header-row *matHeaderRowDef="['stateDesc', 'testsDesc', 'deathsDesc', 'recoveryDesc', 'hospitalizedDesc', 'inIcuDesc', 'onVentilatorDesc']; sticky: true"></tr> -->
+            <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayColumns; sticky: true"></tr>
+
+        </table>
+    </div>
+
+</ng-container>

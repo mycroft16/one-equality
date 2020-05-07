@@ -1,0 +1,170 @@
+<mat-toolbar color="primary">
+    <span>Current Totals by State</span>
+</mat-toolbar>
+<div class="table-container mat-elevation-z8">
+    <table mat-table *ngIf="statesData | async as statesData" [dataSource]="statesData">
+
+        <!-- State Column -->
+        <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef>State</th>
+            <td mat-cell *matCellDef="let state" class="state-click" (click)="onStateClicked(state.state)">{{ state.state }}</td>
+            <td mat-footer-cell *matFooterCellDef>Total</td>
+        </ng-container>
+
+        <!-- Tests: Total -->
+        <ng-container matColumnDef="testsTotal">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let state">{{ state.totalTestResults | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Tests: Positive -->
+        <ng-container matColumnDef="testsPositive">
+            <th mat-header-cell *matHeaderCellDef>Pos</th>
+            <td mat-cell *matCellDef="let state">{{ state.positive | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Tests: Negative -->
+        <ng-container matColumnDef="testsNegative">
+            <th mat-header-cell *matHeaderCellDef>Neg</th>
+            <td mat-cell *matCellDef="let state">{{ state.negative | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Deaths: Total -->
+        <ng-container matColumnDef="deaths">
+            <th mat-header-cell *matHeaderCellDef>Count</th>
+            <td mat-cell *matCellDef="let state">{{ state.death | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Deaths: Rate -->
+        <ng-container matColumnDef="mortalityRate">
+            <th mat-header-cell *matHeaderCellDef>Rate</th>
+            <td mat-cell *matCellDef="let state">{{ getRate(state.death, state.positive) | percent }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Recover: Total -->
+        <ng-container matColumnDef="recovered">
+            <th mat-header-cell *matHeaderCellDef>Count</th>
+            <td mat-cell *matCellDef="let state">{{ state.recovered | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Recover: Rate -->
+        <ng-container matColumnDef="recoveryRate">
+            <th mat-header-cell *matHeaderCellDef>Rate</th>
+            <td mat-cell *matCellDef="let state">{{ getRate(state.recovered, state.positive) | percent }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Hospital: Current -->
+        <ng-container matColumnDef="hospitalizedCurrently">
+            <th mat-header-cell *matHeaderCellDef>Current</th>
+            <td mat-cell *matCellDef="let state">{{ state.hospitalizedCurrently | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Hospital: Cumulative -->
+        <ng-container matColumnDef="hospitalizedCumulative">
+            <th mat-header-cell *matHeaderCellDef>Cumulative</th>
+            <td mat-cell *matCellDef="let state">{{ state.hospitalizedCumulative | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Hospital: Rate -->
+        <ng-container matColumnDef="hospitalizedRate">
+            <th mat-header-cell *matHeaderCellDef>Rate</th>
+            <td mat-cell *matCellDef="let state">{{ getRate(state.hospitalizedCumulative, state.positive) | percent }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- ICU: Current -->
+        <ng-container matColumnDef="inIcuCurrently">
+            <th mat-header-cell *matHeaderCellDef>Current</th>
+            <td mat-cell *matCellDef="let state">{{ state.inIcuCurrently | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- ICU: Cumulative -->
+        <ng-container matColumnDef="inIcuCumulative">
+            <th mat-header-cell *matHeaderCellDef>Cumulative</th>
+            <td mat-cell *matCellDef="let state">{{ state.inIcuCumulative | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- ICU: Rate -->
+        <ng-container matColumnDef="inIcuRate">
+            <th mat-header-cell *matHeaderCellDef>Rate</th>
+            <td mat-cell *matCellDef="let state">{{ getRate(state.inIcuCumulative, state.positive) | percent }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Ventilator: Current -->
+        <ng-container matColumnDef="onVentilatorCurrently">
+            <th mat-header-cell *matHeaderCellDef>Current</th>
+            <td mat-cell *matCellDef="let state">{{ state.onVentilatorCurrently | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Ventilator: Cumulative -->
+        <ng-container matColumnDef="onVentilatorCumulative">
+            <th mat-header-cell *matHeaderCellDef>Cumulative</th>
+            <td mat-cell *matCellDef="let state">{{ state.onVentilatorCumulative | number }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- Ventilator: Rate -->
+        <ng-container matColumnDef="onVentilatorRate">
+            <th mat-header-cell *matHeaderCellDef>Rate</th>
+            <td mat-cell *matCellDef="let state">{{ getRate(state.onVentilatorCumulative, state.positive) | percent }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- DESCRIPTION HEADERS -->
+        <!-- State Desc -->
+        <ng-container matColumnDef="stateDesc">
+            <th mat-header-cell *matHeaderCellDef></th>
+        </ng-container>
+
+        <!-- Tests Desc -->
+        <ng-container matColumnDef="testsDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="3">Tests</th>
+        </ng-container>
+
+        <!-- Deaths Desc -->
+        <ng-container matColumnDef="deathsDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="2">Deaths</th>
+        </ng-container>
+
+        <!-- Recovery Desc -->
+        <ng-container matColumnDef="recoveryDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="2">Recovered</th>
+        </ng-container>
+
+        <!-- Hospitalized Desc -->
+        <ng-container matColumnDef="hospitalizedDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="3">Hospitalized</th>
+        </ng-container>
+
+        <!-- In ICU Desc -->
+        <ng-container matColumnDef="inIcuDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="3">In ICU</th>
+        </ng-container>
+
+        <!-- On Ventilator Desc -->
+        <ng-container matColumnDef="onVentilatorDesc">
+            <th mat-header-cell *matHeaderCellDef colspan="3">On Ventilator</th>
+        </ng-container>
+
+
+        <!-- DEFINE ROWS -->
+        <tr mat-header-row *matHeaderRowDef="['stateDesc', 'testsDesc', 'deathsDesc', 'recoveryDesc', 'hospitalizedDesc', 'inIcuDesc', 'onVentilatorDesc']; sticky: true"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayColumns; sticky: true"></tr>
+
+    </table>
+</div>

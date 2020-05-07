@@ -1,0 +1,63 @@
+:host {
+    .table-container {
+        max-height: 80vh;
+        overflow: auto;
+    }
+    table {
+        width: 100%;
+    }
+    
+    .mat-column-testsDesc, .mat-column-testsTotal {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-column-deathsDesc, .mat-column-deaths {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-column-recoveryDesc, .mat-column-recovered {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-column-hospitalizedDesc, .mat-column-hospitalizedCurrently {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-column-inIcuDesc, .mat-column-inIcuCurrently {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-column-onVentilatorDesc, .mat-column-onVentilatorCurrently {
+        border-left: 1px solid #e0e0e0;
+        padding-left: 5px;
+    }
+
+    .mat-row:nth-child(even) {
+        background-color: #ffffff;
+    }
+    .mat-row:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+
+    tr.mat-footer-row {
+        font-weight: bold;
+    }
+      
+    .mat-table-sticky {
+        background-color: #ffffff;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .state-click {
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

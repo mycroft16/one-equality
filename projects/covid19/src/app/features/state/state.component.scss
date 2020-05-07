@@ -1,0 +1,25 @@
+:host {
+    .table-container {
+        max-height: 80vh;
+        overflow: auto;
+    }
+    table {
+        width: 100%;
+    }
+
+    .mat-row:nth-child(even) {
+        background-color: #ffffff;
+    }
+    .mat-row:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+
+    tr.mat-footer-row {
+        font-weight: bold;
+    }
+      
+    .mat-table-sticky {
+        background-color: #ffffff;
+        border-top: 1px solid #e0e0e0;
+    }
+}
