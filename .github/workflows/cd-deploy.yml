@@ -1,0 +1,27 @@
+name: CI-Deploy
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build COVID-19
+      run: npm run build:covid19
+    
+    - name: ftp-action
+      uses: sebastianpopp/ftp-action@v2.0.0
+      with:
+        host: ${{ secrets.ONE_EQUALITY_SERVER }}
+        user: ${{ secrets.ONE_EQUALITY_USERNAME }}
+        password: ${{ secrets.ONE_EQUALITY_PASSWORD }}
+        localDir: ./dist
+        remoteDir: ./
+    
