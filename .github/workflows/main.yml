@@ -38,4 +38,4 @@ jobs:
         local-dir: ./public_html/
 
     - name: Deploy Complete
-      run: echo Deploy to ${{ FTP-SERVER }} completed.
+      run: echo Deploy to ${{ secrets.ONE_EQUALITY_SERVER }} completed.
