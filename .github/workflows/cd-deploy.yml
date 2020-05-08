@@ -22,6 +22,6 @@ jobs:
         host: ${{ secrets.ONE_EQUALITY_SERVER }}
         user: ${{ secrets.ONE_EQUALITY_USERNAME }}
         password: ${{ secrets.ONE_EQUALITY_PASSWORD }}
-        localDir: ./dist/covid19/*
+        localDir: ./dist/covid19/
         remoteDir: ./public_html/covid19
     
