@@ -32,9 +32,9 @@ jobs:
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@3.1.0
       with:
-        ftp-server: ${{ONE_EQUALITY_SERVER}}
-        ftp-username: ${{ONE_EQUALITY_USERNAME}}
-        ftp-password: ${{ONE_EQUALITY_PASSWORD}}
+        ftp-server: ${{ secrets.ONE_EQUALITY_SERVER }}
+        ftp-username: ${{ secrets.ONE_EQUALITY_USERNAME }}
+        ftp-password: ${{ secrets.ONE_EQUALITY_PASSWORD }}
         local-dir: ./public_html/
 
     - name: Deploy Complete
