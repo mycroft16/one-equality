@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ApiService {
-    private apiVersion: string = 'v1';
+    private apiVersion = 'v1';
 
     constructor(protected readonly http: HttpClient, protected readonly store: Store<AppState>) { }
 

@@ -9,7 +9,7 @@ export interface State {
     current: IStateCurrent[];
     historic: IStateHistoric[];
     stateInfo: IStateInfo;
-};
+}
 
 export const initialState = (): State => {
     return {

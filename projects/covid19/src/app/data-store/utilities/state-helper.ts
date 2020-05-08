@@ -1,6 +1,6 @@
 export interface IAbbrName {
-    abbr: string,
-    name: string,
+    abbr: string;
+    name: string;
 }
 
 export const statesAndAbbrs: IAbbrName[] = [

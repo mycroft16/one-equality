@@ -41,7 +41,7 @@ export class StatesNormalizerService {
             twitterLink: `https://twitter.com/${stateInfo.twitter.replace('@', '')}`,
         };
     }
-    
+
 
     private isNull(value: number): number {
         return (!!value) ? value : 0;
