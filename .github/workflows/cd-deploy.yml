@@ -1,4 +1,4 @@
-name: CI-Deploy
+name: CD-Deploy
 on:
   push:
     branches: [ master ]
@@ -22,6 +22,6 @@ jobs:
         host: ${{ secrets.ONE_EQUALITY_SERVER }}
         user: ${{ secrets.ONE_EQUALITY_USERNAME }}
         password: ${{ secrets.ONE_EQUALITY_PASSWORD }}
-        localDir: ./dist
-        remoteDir: ./
+        localDir: ./dist/covid19/*
+        remoteDir: ./public_html/covid19
     
