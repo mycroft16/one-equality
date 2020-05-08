@@ -1,0 +1,17 @@
+name: CD-Test
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Run Linting
+      run: npm run lint
